@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    mapper:是整个文件的大标签 用来开始和结束xml文件
+    namespace：指定命名空间 相当于包名 用来区分不同mapper.xml文件中相同的id属性
+-->
+<mapper namespace="zhezhi">
+    <!--
+        完成查询全部学生的功能
+        List<Student> getAll();
+        resultType:指定查询返回的结果集的类型，如果是集合则必须是泛型的类型
+        parameterType:如果有参数，则通过parameterType指定参数的类型 getAll();没有参数 则不写
+    -->
+    <select id="getAll" resultType="student">
+        select id,name,email,age
+        from student
+    </select>
+    <select id="getAgeGt"  parameterType="string" resultType="student">
+        select id,name,email,age from student where age > #{age}
+    </select>
+    <!--
+        按主键id查询学生信息
+    -->
+    <select id="getById" parameterType="string" resultType="student">
+        select id,name,email,age from student where id = #{id}
+    </select>
+    <select id="getByName" parameterType="string" resultType="student">
+        /*此处有sql注入风险 直接拼接字符串 */
+        select id,name,email,age from student where name like '%${name}%'
+    </select>
+    <!--增加学生-->
+    <insert id="addStudent" parameterType="student">
+        insert into student (name,email,age) values (#{name},#{email},#{age})
+    </insert>
+    <delete id="delStudent" parameterType="string">
+        delete from student where id = #{id}
+    </delete>
+    <!--改-->
+    <update id="update" parameterType="student">
+        update student set name = #{name}, email = #{email}, age = #{age} where id = #{id}
+    </update>
+</mapper>
