@@ -61,12 +61,12 @@ public class User {
         this.birthday = birthday;
     }
 
-    public String getSex() {
-        return (sex==1?"男":"女");
+    public int getSex() {
+        return this.sex;
     }
 
-    public void setSex(String sex) {
-        this.sex = ("男".equals(sex)?1:2);
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     public String getAddress() {

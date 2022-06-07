@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -37,13 +40,51 @@ public class MyTest {
     }
     @Test
     public void testGetAll() {
-        List<User> userList = sqlSession.selectList("getAll");
+        List<User> userList = sqlSession.selectList("com.weifang.mapper.UserMapper.getAll");
         userList.forEach(System.out::println);
     }
     @Test
     public void testGetAl2l() {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> userList = userMapper.getAll();
+        userList.forEach(System.out::println);
+    }
+    @Test
+    public void testGetById() {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.getById(4);
+        System.out.println(user);
+    }
+    @Test
+    public void testAddUser() throws ParseException {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        Date date = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1946-06-16").getTime());
+        int add = userMapper.addUser(new User("薇v", date, 1, "上海市"));
+        System.out.println(add);
+        sqlSession.commit();
+        testGetAl2l();
+    }
+    @Test
+    public void testDelUser() {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        int del = userMapper.delUser(17);
+        System.out.println(del);
+        sqlSession.commit();
+        testGetAl2l();
+    }
+    @Test
+    public void TestUpdate() throws ParseException {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        Date date = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1994-11-10").getTime());
+        int update = userMapper.Update(new User(1, "张四", date, 1, "枣庄"));
+        System.out.println(update);
+        sqlSession.commit();
+        testGetAl2l();
+    }
+    @Test
+    public void testGetByName() {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> userList = userMapper.getByName("小");
         userList.forEach(System.out::println);
     }
 }

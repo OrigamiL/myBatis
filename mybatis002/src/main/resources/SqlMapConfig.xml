@@ -22,6 +22,8 @@
         </environment>
     </environments>
     <mappers>
-        <mapper class="com.weifang.mapper.UserMapper"/>
+        <!--<mapper class="com.weifang.mapper.UserMapper"/>-->
+        <!--批量注册-->
+        <package name="com.weifang.mapper"/>
     </mappers>
 </configuration>
