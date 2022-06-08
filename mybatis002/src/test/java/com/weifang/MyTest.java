@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Program: myBatis
@@ -58,16 +59,18 @@ public class MyTest {
     @Test
     public void testAddUser() throws ParseException {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        Date date = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1946-06-16").getTime());
-        int add = userMapper.addUser(new User("薇v", date, 1, "上海市"));
+        Date date = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1999-11-11").getTime());
+        User user = new User("test", date, 2, "上海市");
+        int add = userMapper.addUser(user);
         System.out.println(add);
         sqlSession.commit();
-        testGetAl2l();
+        System.out.println(user);
+     //   testGetAl2l();
     }
     @Test
     public void testDelUser() {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        int del = userMapper.delUser(17);
+        int del = userMapper.delUser(28);
         System.out.println(del);
         sqlSession.commit();
         testGetAl2l();
@@ -86,5 +89,22 @@ public class MyTest {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> userList = userMapper.getByName("小");
         userList.forEach(System.out::println);
+    }
+    @Test
+    public void testGetByName2() {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> userList = userMapper.getByName2("张");
+        userList.forEach(System.out::println);
+    }
+    @Test
+    public void testGetByNameOrAddress() {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> userList = userMapper.getByNameOrAddress("address","市");
+        userList.forEach(System.out::println);
+    }
+    @Test
+    public void testUUID() {
+        UUID uuid = UUID.randomUUID();
+        System.out.println(uuid.toString().replace("-","").substring(0,5));
     }
 }

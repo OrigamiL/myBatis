@@ -1,6 +1,7 @@
 package com.weifang.mapper;
 
 import com.weifang.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,13 @@ public interface UserMapper {
     int delUser(int id);
     //修改用户
     int Update(User user);
+    //优化模糊查询
+    List<User> getByName2(String name);
+    //模糊查询用户或者地址
+    List<User> getByNameOrAddress(
+            @Param("columnName")
+            String columnName,
+            @Param("columnValue")
+            String columnValue);
+
 }

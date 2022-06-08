@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.weifang.mapper.UserMapper">
+    <!--
+        <sql>: 定义代码片段
+        <include> 使用代码片段
+    -->
+    <!--
+        <if>：进行条件判断 一般结合<where> 中的test 调用get方法
+        <where>:进行多条件拼接，再查询 删除 更新
+    -->
+    <!--
+        <set>:有选择的更新处理 至少更新一列
+    -->
+    <!--
+        <foreach> 用来循环遍历 完成循环条件查询 批量删除 批量增加 批量更新
+        参数详解：
+        collection:用来指定入参的类型 如果是List集合则为list Map集合则为map 数组则为array
+        item：每次循环遍历出来的值或对象
+        separator：多个值或对象或语句之间的分隔符
+        open：整个循环外面的前括号
+        close：整个循环外面的后括号
+    -->
+    <sql id="allColumns">
+        id,username,birthday,sex,address
+    </sql>
+    <select id="getAll" resultType="user">
+        select <include refid="allColumns"/>
+            from user
+    </select>
+    <select id="getByCondition" resultType="user" parameterType="user">
+        select <include refid="allColumns"/>
+            from user
+            <where>
+                <if test="username != null and username != ''">
+                    and username like concat('%',#{username},'%')
+                </if>
+                <if test="birthday != null">
+                    and birthday = #{birthday}
+                </if>
+                <if test="sex != null and sex != ''">
+                    and sex = #{sex}
+                </if>
+                <if test="address != null and address != ''">
+                    and address like concat('%',#{address},'%')
+                </if>
+            </where>
+    </select>
+    <update id="Update" parameterType="user">
+        update  user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="getByIds" parameterType="int" resultType="user">
+        select <include refid="allColumns"/>
+            from user
+            where id in
+                <foreach collection="array" item="id" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+    </select>
+    <delete id="delByIds" parameterType="int">
+        delete from user where id in
+                         <foreach collection="array" item="id" separator="," open="(" close=")">
+                            #{id}
+                         </foreach>
+    </delete>
+    <insert id="addUsers" parameterType="user">
+        insert into user(username, birthday, sex, address) values
+            <foreach collection="list" separator="," item="user" >
+                (#{user.username},#{user.birthday},#{user.sex},#{user.address})
+            </foreach>
+    </insert>
+</mapper>

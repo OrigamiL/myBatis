@@ -21,7 +21,18 @@
     <select id="getByName" parameterType="string" resultType="user">
         select id,username,birthday,sex,address from user where username like '%${name}%'
     </select>
+    <!--
+            keyProperty：user对象的哪个属性来接返回的主键值
+            resultType：返回的主键类型
+            order：在插入语句执行前还是执行后返回主键的值
+    -->
     <insert id="addUser" parameterType="user">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        <!--<selectKey order="BEFORE" keyProperty="id" resultType="string">
+            select uuid();
+        </selectKey>-->
         insert into user(username, birthday, sex, address) values (#{username},#{birthday},#{sex},#{address})
     </insert>
     <delete id="delUser" parameterType="int">
@@ -30,4 +41,11 @@
     <update id="Update" parameterType="user">
         update user set username = #{username}, birthday = #{birthday}, sex = #{sex}, address = #{address} where id = #{id}
     </update>
+    <!--concat拼接字符串 防sql注入-->
+    <select id="getByName2" parameterType="string" resultType="user">
+        select id,username,birthday,sex,address from user where username like concat('%',#{name},'%')
+    </select>
+    <select id="getByNameOrAddress" parameterType="string" resultType="user">
+        select id,username,birthday,sex,address from user where ${columnName} like concat('%',#{columnValue},'%')
+    </select>
 </mapper>
