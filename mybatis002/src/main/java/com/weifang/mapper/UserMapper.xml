@@ -24,13 +24,13 @@
     <!--
             keyProperty：user对象的哪个属性来接返回的主键值
             resultType：返回的主键类型
-            order：在插入语句执行前还是执行后返回主键的值
+            orders：在插入语句执行前还是执行后返回主键的值
     -->
     <insert id="addUser" parameterType="user">
-        <selectKey keyProperty="id" resultType="int" order="AFTER">
+        <selectKey keyProperty="id" resultType="int" orders="AFTER">
             select last_insert_id();
         </selectKey>
-        <!--<selectKey order="BEFORE" keyProperty="id" resultType="string">
+        <!--<selectKey orders="BEFORE" keyProperty="id" resultType="string">
             select uuid();
         </selectKey>-->
         insert into user(username, birthday, sex, address) values (#{username},#{birthday},#{sex},#{address})

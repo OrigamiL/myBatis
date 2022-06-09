@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.weifang.mapper.CustomerMapper">
+    <resultMap id="customerMap" type="customer">
+        <id property="id" column="id"/>
+        <result property="age" column="age"/>
+        <result property="name" column="name"/>
+        <collection property="ordersList" ofType="orders">
+            <id property="id" column="id"/>
+            <id property="orderNumber" column="orderNumber"/>
+            <id property="orderPrice" column="orderPrice"/>
+        </collection>
+    </resultMap>
+    <select id="getById" resultMap="customerMap">
+        select c.id,c.age,c.name,o.id,o.orderNumber,o.orderPrice
+            from customer c left join orders o on c.id = o.customer_id
+            where c.id = #{id}
+    </select>
+    <resultMap id="customerMap1" type="customer">
+        <id property="id" column="id"/>
+        <result property="age" column="age"/>
+        <result property="name" column="name"/>
+        <collection property="ordersList" ofType="orders" column="id"
+                    select="com.weifang.mapper.OrderMapper.getOrderByCustomerId"/>
+    </resultMap>
+    <select id="getOrderById" resultMap="customerMap1">
+        select * from customer where id = #{id}
+    </select>
+
+</mapper>

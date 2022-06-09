@@ -83,8 +83,52 @@
     </delete>
     <insert id="addUsers" parameterType="user">
         insert into user(username, birthday, sex, address) values
-            <foreach collection="list" separator="," item="user" >
+            <foreach collection="list" separator="," item="user" > 
                 (#{user.username},#{user.birthday},#{user.sex},#{user.address})
             </foreach>
     </insert>
+    <update id="updateUsers" parameterType="user">
+        <foreach collection="list" item="user" separator=";">
+            update user
+                <set>
+                    <if test="user.username != null and user.username != ''">
+                        username = #{user.username},
+                    </if>
+                    <if test="user.birthday != null">
+                        birthday = #{user.birthday},
+                    </if>
+                    <if test="user.sex != null and user.sex != ''">
+                        sex = #{user.sex},
+                    </if>
+                    <if test="user.address != null and user.address != ''">
+                        address = #{user.address}
+                    </if>
+                </set>
+            where id = #{user.id}
+        </foreach>
+    </update>
+    <!--简单类型和实体类型写parameterType 简单类型也可以省略 其余不写-->
+    <!--指定下标位置查询-->
+    <select id="getByBirthday" resultType="user" >
+        select <include refid="allColumns"/>
+            from user
+            where birthday between #{arg0} and #{arg1}
+    </select>
+    <select id="getByMap" resultType="user">
+        select <include refid="allColumns"/>
+            from user
+            where birthday between #{birthdayBegin} and #{birthdayEnd} and sex = #{sex}
+    </select>
+    <select id="getReturnMap" resultType="map">
+        select username '用户名',address '地址' from user where id = #{id}
+    </select>
+    <select id="getReturnMaps" resultType="map">
+        select username,address from user
+            <if test="array!=null">
+                where id in
+                <foreach collection="array" item="id" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+    </select>
 </mapper>
