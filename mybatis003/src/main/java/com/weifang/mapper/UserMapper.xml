@@ -9,7 +9,7 @@
         <include> 使用代码片段
     -->
     <!--
-        <if>：进行条件判断 一般结合<where> 中的test 调用get方法
+        <if>：进行条件判断 一般结合<where>
         <where>:进行多条件拼接，再查询 删除 更新
     -->
     <!--
@@ -114,15 +114,17 @@
             from user
             where birthday between #{arg0} and #{arg1}
     </select>
+    <!--入参是map #{}中是键名-->
     <select id="getByMap" resultType="user">
         select <include refid="allColumns"/>
             from user
             where birthday between #{birthdayBegin} and #{birthdayEnd} and sex = #{sex}
     </select>
     <select id="getReturnMap" resultType="map">
-        select username '用户名',address '地址' from user where id = #{id}
+        select username '用户名',address '地址' from user
+                where id = #{id}
     </select>
-    <select id="getReturnMaps" resultType="map">
+    <select id="getReturnMaps" resultType="map" >
         select username,address from user
             <if test="array!=null">
                 where id in
@@ -130,5 +132,9 @@
                     #{id}
                 </foreach>
             </if>
+    </select>
+    <select id="getById" resultType="user">
+        select <include refid="allColumns"/>
+        from user where id = #{id}
     </select>
 </mapper>

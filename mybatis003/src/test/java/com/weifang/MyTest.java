@@ -176,4 +176,18 @@ public class MyTest {
         Customer customer = customerMapper.getOrderById(1);
         System.out.println(customer);
     }
+    @Test
+    public void testCache2() {
+        User user = userMapper.getById(5);
+        User user1 = userMapper.getById(5);
+        System.out.println(user);
+        System.out.println(user1);
+    }
+    @Test
+    public void testCache3() {
+        User user = userMapper.getById(5);
+        User user1 = userMapper.getById(5);
+        System.out.println(user);
+        System.out.println(user1);
+    }
 }

@@ -20,6 +20,6 @@
         where o.id = #{id}
     </select>
     <select id="getOrderByCustomerId" resultType="orders">
-        select * from orders where customer_id = #{id}
+        select * from orders where customer_id = #{customer_id}
     </select>
 </mapper>

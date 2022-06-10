@@ -67,9 +67,10 @@
     </environments>
     <!--
         注册mapper.xml
+        package:批量注册
         resource:从resource目录下找指定名称的文件注册
         url:使用绝对路径注册
-        class:动态代理方式下的注册
+        class:动态代理方 式下的注册
     -->
     <mappers>
         <mapper resource="StudentMapper.xml"/>

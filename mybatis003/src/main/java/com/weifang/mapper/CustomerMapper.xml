@@ -23,6 +23,7 @@
         <id property="id" column="id"/>
         <result property="age" column="age"/>
         <result property="name" column="name"/>
+        <!--column:是当前表中的列名 且与另一方有关联的列名-->
         <collection property="ordersList" ofType="orders" column="id"
                     select="com.weifang.mapper.OrderMapper.getOrderByCustomerId"/>
     </resultMap>
