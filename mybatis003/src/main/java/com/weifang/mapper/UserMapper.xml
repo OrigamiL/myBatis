@@ -137,4 +137,8 @@
         select <include refid="allColumns"/>
         from user where id = #{id}
     </select>
+    <select id="getByMapAndReturnMap" resultType="map">
+        select username,address from user
+            where address = #{userAddress} and sex = #{userSex}
+    </select>
 </mapper>

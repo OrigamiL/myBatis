@@ -13,7 +13,7 @@
     </select>
     <!--resultMap 手动完成映射-->
     <resultMap id="bookMap" type="book">
-        <!--逐渐绑定-->
+        <!--主键绑定-->
         <id property="id" column="bookid"/>
         <!--非主键绑定-->
         <result property="name" column="bookname"/>

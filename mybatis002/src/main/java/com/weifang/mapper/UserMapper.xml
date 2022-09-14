@@ -27,7 +27,7 @@
             orders：在插入语句执行前还是执行后返回主键的值
     -->
     <insert id="addUser" parameterType="user">
-        <selectKey keyProperty="id" resultType="int" orders="AFTER">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
             select last_insert_id();
         </selectKey>
         <!--<selectKey orders="BEFORE" keyProperty="id" resultType="string">

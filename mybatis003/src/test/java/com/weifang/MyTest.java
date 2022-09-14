@@ -190,4 +190,12 @@ public class MyTest {
         System.out.println(user);
         System.out.println(user1);
     }
+    @Test
+    public void getByMapAndReturnMap() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("userSex",1);
+        map.put("userAddress","上海市");
+        List<Map<String, Object>> returnMap = userMapper.getByMapAndReturnMap(map);
+        returnMap.forEach(System.out::println);
+    }
 }

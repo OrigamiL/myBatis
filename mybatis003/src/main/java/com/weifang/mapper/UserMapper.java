@@ -28,5 +28,6 @@ public interface UserMapper {
     Map<String,Object> getReturnMap(Integer id);
     List<Map<String,Object>> getReturnMaps();
     List<Map<String,Object>> getReturnMaps(Integer[] arr);
+    List<Map<String,Object>> getByMapAndReturnMap(Map<?,?> map);
     User getById(Integer id);
 }

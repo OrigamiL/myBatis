@@ -62,9 +62,9 @@ public class MyTest {
         Date date = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1999-11-11").getTime());
         User user = new User("test", date, 2, "上海市");
         int add = userMapper.addUser(user);
-        System.out.println(add);
+        System.out.println("add:"+add);
         sqlSession.commit();
-        System.out.println(user);
+        System.out.println(user.getId());
      //   testGetAl2l();
     }
     @Test

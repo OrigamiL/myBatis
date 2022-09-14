@@ -8,6 +8,7 @@
         <id property="id" column="id"/>
         <id property="orderNumber" column="orderNumber"/>
         <id property="orderPrice" column="orderPrice"/>
+        <!--association标签用于一对一映射-->
         <association property="customer" javaType="customer" >
             <id property="id" column="id"/>
             <id property="name" column="name"/>
